@@ -12,19 +12,20 @@
 <main>
   <div class="jumbotron">
     <h1>Jackson Johnson</h1>
-    <h3>Mission - Create High Quality Scripts</h3>
-    <p><%= tagline %></p>
+    <h3>The Mission: Build High Quality Scripts</h3>
+    <strong><p><%= tagline %></p></strong>
 
     <ul>
-        <% mascots.forEach(function(mascot) { %>
+        <% projects.forEach(function(project) { %>
           <li>
-            <strong><%= mascot.name %></strong>
-            is an <%= mascot.description %>,
-            TRiBot <%= mascot.released %>
+            <strong><%= project.name %></strong>
+            is an <%= project.description %>,
+            TRiBot <%= project.released %>
           </li>
         <% }); %>
       </ul>
 
+      <a href="/about"><button type="button" class="btn btn-outline-dark" >About Me</button></a>
   </div>
 </main>
 

@@ -6,19 +6,18 @@ var app = express();
 app.set('view engine', 'ejs');
 
 // use res.render to load up an ejs view file
-
 // index page
 app.get('/', function(req, res) {
-  var mascots = [
+  var projects = [
     { name: 'Polymorphic Auto Woodcutter', description: "advanced AIO woodcutting script", released: 2021},
     { name: 'Motherlode Mine X', description: "advanced motherlode mine script", released: 2021},
     { name: 'Sulliuscep X', description: "advanced sulliuscep script", released: 2021}
   ];
 
-  var tagline = "No programming concept is complete without polymorphism";
+  var tagline = "'No programming concept is complete without polymorphism'";
 
   res.render('pages/index', {
-    mascots: mascots,
+    projects: projects,
     tagline: tagline
   });
 });
