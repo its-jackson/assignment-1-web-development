@@ -1,37 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <%- include('../partials/head'); %>
+    <%- include('../partials/head'); %>
 </head>
+
 <body class="container">
 
-<header>
-  <%- include('../partials/header'); %>
-</header>
+    <header>
+        <%- include('../partials/header'); %>
+    </header>
 
-<main>
-  <div class="jumbotron">
-    <h1>My Mission</h1>
-    <h3>Build High Quality Scripts</h3>
-    <strong><p><%= tagline %></p></strong>
+    <main>
+        <div class="jumbotron">
+            <h1>My Mission</h1>
+            <h3>Build High Quality Scripts</h3>
+            <strong>
+                <p>
+                    <%= tagline %>
+                </p>
+            </strong>
 
-    <ul>
-        <% projects.forEach(function(project) { %>
-          <li>
-            <strong><%= project.name %></strong>
-            is an <%= project.description %>,
-            TRiBot <%= project.released %>
-          </li>
-        <% }); %>
-      </ul>
+            <ul>
+                <% projects.forEach(function(project) { %>
+                    <li>
+                        <strong>
+                            <%= project.name %>
+                        </strong>
+                        is an <%= project.description %>,
+                            TRiBot <%= project.released %>
+                    </li>
+                    <% }); %>
+            </ul>
 
-      <a href="/about"><button type="button" class="btn btn-outline-dark" >About Me</button></a>
-  </div>
-</main>
+            <a href="/about"><button type="button" class="btn btn-outline-dark">About Me</button></a>
+        </div>
+    </main>
 
-<footer>
-  <%- include('../partials/footer'); %>
-</footer>
+    <footer>
+        <%- include('../partials/footer'); %>
+    </footer>
 
 </body>
+
 </html>
