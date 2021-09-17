@@ -75,6 +75,12 @@ app.get('/contact', function(req, res) {
   });
 });
 
-// port for server 8080
-app.listen(8080);
-console.log('Server listening on port 8080');
+// port for server 8080 if not set 
+let port = process.env.PORT;
+
+if (port == null || port == "") {
+  port = 8080;
+}
+
+app.listen(port);
+console.log('Server listening on port ' + port);
