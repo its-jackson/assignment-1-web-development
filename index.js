@@ -1,15 +1,15 @@
-// get express module
+// express module
 var express = require('express');
 var app = express();
 
-// set the view engine to ejs
+// view engine ejs
 app.set('view engine', 'ejs');
 
-// Define the static file path
+// define the static file path
 app.use(express.static(__dirname+'/public'));
 
-// use res.render to load up an ejs view file
-// index page
+// res.render to load up view file
+// home page route
 app.get('/', function(req, res) {
 
   var projects = [
@@ -26,7 +26,7 @@ app.get('/', function(req, res) {
   });
 });
 
-// about page
+// about page route
 app.get('/about', function(req, res) {
 
   var tagline = "Also known as Polymoprhic - TRiBot";
@@ -36,7 +36,7 @@ app.get('/about', function(req, res) {
   });
 });
 
-// projects page
+// projects page route
 app.get('/projects', function(req, res) {
 
   var tagline = "'If you only knew the magnificence of the 3.'";
@@ -49,6 +49,29 @@ app.get('/projects', function(req, res) {
     woodcutter: woodcutter,
     motherlode: motherlode,
     sulliuscep: sulliuscep
+  });
+});
+
+// services page route
+app.get('/services', function(req, res) {
+
+  var tagline = "";
+  var services = [
+    { service: 'Software Testing And Debugging', description: "Debug and test your software", cost: 50.00},
+    { service: 'Code Consulting', description: "Consult and instruct your code", cost: 50.00},
+    { service: 'Programming Fundamentals', description: "Java programming lessons ", cost: 50.00}
+  ];
+
+  res.render('pages/services', {
+    services: services
+  });
+});
+
+// contact page route
+app.get('/contact', function(req, res) {
+
+  res.render('pages/contact', {
+
   });
 });
 
