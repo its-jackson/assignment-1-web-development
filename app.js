@@ -18,11 +18,11 @@ app.get('/', function(req, res) {
     { name: 'Sulliuscep X', description: "advanced sulliuscep script", released: 2021}
   ];
 
-  var tagline = "'No programming concept is complete without polymorphism.'";
+  var tag = "'No programming concept is complete without polymorphism.'";
 
   res.render('pages/index', {
     projects: projects,
-    tagline: tagline
+    tagline: tag
   });
 });
 
@@ -39,13 +39,13 @@ app.get('/about', function(req, res) {
 // projects page route
 app.get('/projects', function(req, res) {
 
-  var tagline = "'If you only knew the magnificence of the 3.'";
+  var tag = "'If you only knew the magnificence of the 3.'";
   var woodcutter = "Polymorphic Auto Woodcutter";
   var motherlode = "Motherlode Mine X";
   var sulliuscep = "Sulliuscep X";
 
   res.render('pages/projects', {
-    tagline: tagline,
+    tagline: tag,
     woodcutter: woodcutter,
     motherlode: motherlode,
     sulliuscep: sulliuscep
@@ -55,7 +55,6 @@ app.get('/projects', function(req, res) {
 // services page route
 app.get('/services', function(req, res) {
 
-  var tagline = "";
   var services = [
     { service: 'Software Testing And Debugging', description: "Debug and test your software", cost: 50.00},
     { service: 'Code Consulting', description: "Consult and instruct your code", cost: 50.00},
@@ -76,11 +75,13 @@ app.get('/contact', function(req, res) {
 });
 
 // port for server 8080 if not set 
+// for heroku cloud hosting
 let port = process.env.PORT;
 
 if (port == null || port == "") {
   port = 8080;
 }
 
+// set listening port
 app.listen(port);
 console.log('Server listening on port ' + port);
