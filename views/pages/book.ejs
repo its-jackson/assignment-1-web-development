@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- 
+  Author: Jackson Johnson 301174798
+  Date: September 16th, 2021 TTT
+  Time: 9:16 PM TORONTO
+-->
+
+<head>
+    <%- include('../partials/head'); %>
+</head>
+
+<body class="container">
+
+    <header>
+        <%- include('../partials/header'); %>
+    </header>
+
+    <main class="container">
+        <div class="row">
+            <div class="col-md-offset-3 col-md-9">
+                <h1>My Books</h1>
+                <br>
+                <table class="table table-bordered table-striped table-hover">
+                    <!-- Header Row-->
+                    <tr>
+                        <th class="text-center">Name</th>
+                        <th class="text-center">Author</th>
+                        <th class="text-center">Published</th>
+                        <th class="text-center">Price</th>
+                    </tr>
+                    <!-- Repeatable Template Row-->
+                    <% for(var i = 0; i < BookList.length; i++) { %>
+                        <tr>
+                            <td class="text-center"><%= BookList[i].name %></td>
+                            <td class="text-center"><%= BookList[i].author %></td>
+                            <td class="text-center"><%= BookList[i].published %></td>
+                            <td class="text-center"><%= BookList[i].price %></td>
+                        </tr>
+                        <% } %>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <%- include('../partials/footer'); %>
+    </footer>
+
+</body>
+
+</html>

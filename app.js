@@ -2,6 +2,21 @@
 var express = require('express');
 var app = express();
 
+// mongoose module
+var mongoose = require('mongoose');
+
+// book database route
+var bookDB = require('./models/book');
+
+// database setup
+var db = require('./db');
+mongoose.connect(db.URI);
+var mongodb = mongoose.connection;
+mongodb.on('error', console.error.bind(console, 'Connection Error'));
+mongodb.once('open', ()=> {
+  console.log("Connected to MongoDB...")
+})
+
 // view engine ejs
 app.set('view engine', 'ejs');
 
@@ -71,6 +86,21 @@ app.get('/contact', function(req, res) {
 
   res.render('pages/contact', {
 
+  });
+});
+
+// book page route
+app.get('/book', function(req, res) {
+
+  bookDB.find((err, BookList) => {
+    if (err) {
+        return console.error(err);
+    } else {
+      console.log(BookList);
+      res.render('pages/book', {
+        BookList: BookList
+      });
+    }
   });
 });
 
