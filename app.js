@@ -6,7 +6,7 @@ var app = express();
 var mongoose = require('mongoose');
 
 // book database route
-var bookDB = require('./models/book');
+var contactListModel = require('./models/contacts');
 
 // port for server 8080 if not set 
 // for heroku cloud hosting
@@ -107,21 +107,28 @@ app.get('/contact', function(req, res) {
 });
 
 // book page route
-app.get('/book', function(req, res) {
+app.get('/list', function(req, res) {
 
-  bookDB.find((err, BookList) => {
+  var data = {
+    name: 'Jack',
+    author: 'Jack',
+    published: 1998,
+    price: 99.55
+  }
+
+ //bookDB.insertMany(data);
+
+  contactListModel.find((err, ContactList) => {
     if (err) {
         return console.error(err);
     } else {
-      console.log(BookList);
-      res.render('pages/book', {
-        BookList: BookList
+      console.log(ContactList);
+      res.render('pages/list', {
+        ContactList: ContactList
       });
     }
   });
 });
-
-
 
 // set listening port
 app.listen(port);

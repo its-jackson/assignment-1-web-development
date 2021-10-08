@@ -19,23 +19,21 @@
     <main class="container">
         <div class="row">
             <div class="col-md-offset-3 col-md-9">
-                <h1>My Books</h1>
+                <h1>Business Contacts</h1>
                 <br>
                 <table class="table table-bordered table-striped table-hover">
                     <!-- Header Row-->
                     <tr>
                         <th class="text-center">Name</th>
-                        <th class="text-center">Author</th>
-                        <th class="text-center">Published</th>
-                        <th class="text-center">Price</th>
+                        <th class="text-center">Phone</th>
+                        <th class="text-center">Email</th>
                     </tr>
                     <!-- Repeatable Template Row-->
-                    <% for(var i = 0; i < BookList.length; i++) { %>
+                    <% for(var i = 0; i < ContactList.length; i++) { %>
                         <tr>
-                            <td class="text-center"><%= BookList[i].name %></td>
-                            <td class="text-center"><%= BookList[i].author %></td>
-                            <td class="text-center"><%= BookList[i].published %></td>
-                            <td class="text-center"><%= BookList[i].price %></td>
+                            <td class="text-center"><%= ContactList[i].name %></td>
+                            <td class="text-center"><%= ContactList[i].phone %></td>
+                            <td class="text-center"><%= ContactList[i].email %></td>
                         </tr>
                         <% } %>
                 </table>
