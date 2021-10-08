@@ -8,14 +8,31 @@ var mongoose = require('mongoose');
 // book database route
 var bookDB = require('./models/book');
 
+// port for server 8080 if not set 
+// for heroku cloud hosting
+let port = process.env.PORT || 8080;
+
 // database setup
-var db = require('./db');
-mongoose.connect(db.URI);
+// password = au8MwyULoOhdXRoz
+// user = admin
+const MONGODB_URI = 'mongodb+srv://admin:au8MwyULoOhdXRoz@cluster0.nsvts.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+const db = require('./db');
+
+mongoose
+.connect(MONGODB_URI || db.URI)
+.catch(err => console.log(err));
+
 var mongodb = mongoose.connection;
-mongodb.on('error', console.error.bind(console, 'Connection Error'));
-mongodb.once('open', ()=> {
-  console.log("Connected to MongoDB...")
-})
+
+mongodb.on('connected', () => {
+  console.log('Connected mongodb');
+});
+
+//mongodb.on('error', console.error.bind(console, 'Connection Error'));
+
+// mongodb.once('open', ()=> {
+//   console.log("Connected to MongoDB...")
+// })
 
 // view engine ejs
 app.set('view engine', 'ejs');
@@ -104,13 +121,7 @@ app.get('/book', function(req, res) {
   });
 });
 
-// port for server 8080 if not set 
-// for heroku cloud hosting
-let port = process.env.PORT;
 
-if (port == null || port == "") {
-  port = 8080;
-}
 
 // set listening port
 app.listen(port);
