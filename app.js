@@ -2,14 +2,28 @@
 var express = require('express');
 var app = express();
 
+var passport = require('passport');
+
+// express sessions module
+var session = require('express-session');
+
 // mongoose module
 var mongoose = require('mongoose');
+
+// mongoose passport
+const passportLocalMongoose = require('passport-local-mongoose');
+
+// ensure lgoin
+const connectEnsureLogin = require('connect-ensure-login');
 
 // body parser
 var bodyParser = require('body-parser');
 
 // book database route
 let contactListModel = require('./models/contacts');
+
+// user db
+let userModel = require('./models/users');
 
 // port for server 8080 if not set 
 // for heroku cloud hosting
@@ -21,7 +35,6 @@ let port = process.env.PORT || 8080;
 const MONGODB_URI = 'mongodb+srv://admin:au8MwyULoOhdXRoz@cluster0.nsvts.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 const db = require('./db');
 
-
 mongoose
 .connect(MONGODB_URI || db.URI)
 .catch(err => console.log(err));
@@ -32,26 +45,48 @@ mongodb.on('connected', () => {
   console.log('Connected mongodb');
 });
 
-//mongodb.on('error', console.error.bind(console, 'Connection Error'));
-
-// mongodb.once('open', ()=> {
-//   console.log("Connected to MongoDB...")
-// })
-
 // view engine ejs
 app.set('view engine', 'ejs');
 
 // define the static file path
 app.use(express.static(__dirname+'/public'));
 
-// accept url encoded
+// session
+app.use(session({
+	secret: 'secret',
+	resave: true,
+	saveUninitialized: true
+}));
 
+// accept url encoded
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 
 // accept json 
 app.use(bodyParser.json());
+
+// passport
+app.use(passport.initialize());
+app.use(passport.session());
+// Passport Local Strategy
+passport.use(userModel.createStrategy());
+// To use with sessions
+passport.serializeUser(userModel.serializeUser());
+passport.deserializeUser(userModel.deserializeUser());
+
+// login page route
+app.get('/login', function(req, res) {
+  res.render('pages/login', {
+
+  });
+});
+
+// Post Route: /login
+app.post('/login', passport.authenticate('local', { failureRedirect: '/login' }),  function(req, res) {
+	console.log(req.user)
+	res.redirect('/list');
+});
 
 // res.render to load up view file
 // home page route
@@ -119,7 +154,7 @@ app.get('/contact', function(req, res) {
 });
 
 // list page route
-app.get('/list', function(req, res) {
+app.get('/list', connectEnsureLogin.ensureLoggedIn(), function(req, res) {
   contactListModel.find((err, ContactList) => {
     if (err) {
         return console.error(err);

@@ -1,4 +1,3 @@
-let express = require('express');
 // mongoose module
 var mongoose = require('mongoose');
 // create a model class
