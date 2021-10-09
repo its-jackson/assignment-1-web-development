@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- 
+  Author: Jackson Johnson 301174798
+  Date: September 16th, 2021
+  Time: 9:16 PM TORONTO
+-->
+
+<head>
+    <%- include('../partials/head'); %>
+</head>
+
+<body class="container">
+
+    <header>
+        <%- include('../partials/header'); %>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="row">
+                <div class="offest-md-2 col-md-4">
+                    <h1>Edit Contact</h1>
+
+                    <form class="form" method="POST">
+                        <div class="form-group">
+                            <label for="nameTextField">Contact Name</label>
+                            <input type="text" class="form-control" id="nameTextField" placeholder="Enter Contact Name" name="name" value="<%= contact.name %>" required>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="phoneTextField">Phone Number</label>
+                            <input type="number" class="form-control" id="phoneTextField" placeholder="Enter Phone Number" name="phone" value="<%= contact.phone %>" required>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="emailTextField">Email Address</label>
+                            <input type="email" class="form-control" id="emailTextField" placeholder="Enter Email Address" name="email" value="<%= contact.email %>" required>
+                        </div>
+
+                        <button class="btn btn-primary" type="submit">
+                            Edit
+                        </button>
+
+                        <a href="/list" class="btn btn-warning">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <%- include('../partials/footer'); %>
+    </footer>
+
+</body>
+
+</html>

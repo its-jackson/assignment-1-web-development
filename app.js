@@ -5,8 +5,11 @@ var app = express();
 // mongoose module
 var mongoose = require('mongoose');
 
+// body parser
+var bodyParser = require('body-parser');
+
 // book database route
-var contactListModel = require('./models/contacts');
+let contactListModel = require('./models/contacts');
 
 // port for server 8080 if not set 
 // for heroku cloud hosting
@@ -17,6 +20,7 @@ let port = process.env.PORT || 8080;
 // user = admin
 const MONGODB_URI = 'mongodb+srv://admin:au8MwyULoOhdXRoz@cluster0.nsvts.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 const db = require('./db');
+
 
 mongoose
 .connect(MONGODB_URI || db.URI)
@@ -39,6 +43,15 @@ app.set('view engine', 'ejs');
 
 // define the static file path
 app.use(express.static(__dirname+'/public'));
+
+// accept url encoded
+
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+
+// accept json 
+app.use(bodyParser.json());
 
 // res.render to load up view file
 // home page route
@@ -100,24 +113,13 @@ app.get('/services', function(req, res) {
 
 // contact page route
 app.get('/contact', function(req, res) {
-
   res.render('pages/contact', {
 
   });
 });
 
-// book page route
+// list page route
 app.get('/list', function(req, res) {
-
-  var data = {
-    name: 'Jack',
-    author: 'Jack',
-    published: 1998,
-    price: 99.55
-  }
-
- //bookDB.insertMany(data);
-
   contactListModel.find((err, ContactList) => {
     if (err) {
         return console.error(err);
@@ -126,6 +128,86 @@ app.get('/list', function(req, res) {
       res.render('pages/list', {
         ContactList: ContactList
       });
+    }
+  });
+}); 
+
+// add get route (CREATE OPERATION)
+app.get('/add', function(req, res) {
+  res.render('pages/add', {
+    
+  });
+});
+
+// add post route (CREATE OPERATION)
+app.post('/add', function(req, res) {
+  var newContact = contactListModel({
+    "name": req.body.name,
+    "phone": req.body.phone,
+    "email": req.body.email
+  });
+
+  contactListModel.create(newContact, (err, contactListModel) => {
+    if (err) {
+      console.log(err);
+      res.end(err);
+    } else {
+      // refresh contact list
+      res.redirect('/list');
+    }
+  });
+});
+
+// edit get route (UPDATE OPERATION)
+app.get('/edit/:id', function(req, res) {
+  var id =  req.params.id;
+
+  contactListModel.findById(id, (err, currentContact) => {
+    if (err) {
+      console.log(err);
+      res.end(err); 
+    } else {
+      // show edit view
+      res.render('pages/edit', {
+        contact: currentContact
+      })
+    }
+  });
+});
+
+// edit post route (UPDATE OPERATION)
+app.post('/edit/:id', function(req, res) {
+  var id = req.params.id;
+
+  var updateContact = contactListModel({
+    "_id": id,
+    "name": req.body.name,
+    "phone": req.body.phone,
+    "email": req.body.email
+  });
+
+  contactListModel.updateOne({_id: id}, updateContact, (err) => {
+    if (err) {
+      console.log(err);
+      res.end(err);
+    } else {
+      // refresh contact list
+      res.redirect('/list');
+    }
+  });
+});
+
+// delete get route
+app.get('/delete/:id', function(req, res) {
+  var id = req.params.id;
+
+  contactListModel.remove({_id: id}, (err) => {
+    if (err) {
+      console.log(err);
+      res.end(err);
+    } else {
+      // refresh contact list
+      res.redirect('/list');
     }
   });
 });
